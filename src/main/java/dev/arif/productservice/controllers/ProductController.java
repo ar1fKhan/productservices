@@ -30,11 +30,11 @@ public class ProductController {
 //    Could not autowire. There is more than one bean of 'ProductService' type
      // This issue we got because there is two implementation of product service, to resolve
     // we have to Qualify that product service we will Qualifier Keyword
-    // we can add like this @Qualifier("FakeStoreProductService") ProductService productService but
+    // we can add like this @Qualifier("FakeStoreProductService") ProductService but
     // if suppose we want to use other service then we have to change the code base to avoid that
-    // we can add it in application.properties and and we can use varaible name here.
-    
-    public ProductController(@Qualifier("FakeStoreProductService") ProductService productService)
+    // we can add it in application.properties, and we can use variable name here.
+
+    public ProductController(ProductService productService)
     {
         this.productService = productService;
     }

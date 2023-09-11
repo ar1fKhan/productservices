@@ -1,4 +1,4 @@
-package dev.arif.productservice.dtos;
+package dev.arif.productservice.thirdpartyclient.productservice.fakeStore;
 
 import lombok.Getter;
 import lombok.Setter;
