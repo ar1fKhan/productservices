@@ -33,14 +33,7 @@ public class ProductController {
     // we can add like this @Qualifier("FakeStoreProductService") ProductService productService but
     // if suppose we want to use other service then we have to change the code base to avoid that
     // we can add it in application.properties and and we can use varaible name here.
-
-    @ExceptionHandler(NotFoundException.class)
-    private  ResponseEntity<ExceptionDto>  handleNotFound(NotFoundException notFoundException)
-    {
-       return new ResponseEntity(
-               new ExceptionDto( HttpStatus.NOT_FOUND,notFoundException.getMessage()),
-               HttpStatus.NOT_FOUND);
-    }
+    
     public ProductController(@Qualifier("FakeStoreProductService") ProductService productService)
     {
         this.productService = productService;
