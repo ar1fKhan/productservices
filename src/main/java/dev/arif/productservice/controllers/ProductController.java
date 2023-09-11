@@ -1,6 +1,8 @@
 package dev.arif.productservice.controllers;
 
+import dev.arif.productservice.dtos.ExceptionDto;
 import dev.arif.productservice.dtos.GenericProductDto;
+import dev.arif.productservice.exception.NotFoundException;
 import dev.arif.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,14 @@ public class ProductController {
     // we can add like this @Qualifier("FakeStoreProductService") ProductService productService but
     // if suppose we want to use other service then we have to change the code base to avoid that
     // we can add it in application.properties and and we can use varaible name here.
+
+    @ExceptionHandler(NotFoundException.class)
+    private  ResponseEntity<ExceptionDto>  handleNotFound(NotFoundException notFoundException)
+    {
+       return new ResponseEntity(
+               new ExceptionDto( HttpStatus.NOT_FOUND,notFoundException.getMessage()),
+               HttpStatus.NOT_FOUND);
+    }
     public ProductController(@Qualifier("FakeStoreProductService") ProductService productService)
     {
         this.productService = productService;
@@ -43,9 +53,9 @@ public class ProductController {
 
     //localhost:8080/products/123
     @GetMapping("{id}")
-    public GenericProductDto getProductById(@PathVariable("id") Long id)
+    public GenericProductDto getProductById(@PathVariable("id") Long id) throws NotFoundException
     {
-         return productService.getProductById(id);
+         return productService.getProductById(id) ;
     }
     //Path variable is used for getting resouse by Id
     @DeleteMapping("{id}")

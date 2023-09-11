@@ -2,6 +2,7 @@ package dev.arif.productservice.service;
 
 import dev.arif.productservice.dtos.FakeStoreProductDto;
 import dev.arif.productservice.dtos.GenericProductDto;
+import dev.arif.productservice.exception.NotFoundException;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public GenericProductDto getProductById(Long id) {
+    public GenericProductDto getProductById(Long id) throws NotFoundException {
 
         RestTemplate restTemplate = restTemplateBuilder.build();
 
@@ -51,6 +52,11 @@ public class FakeStoreProductService implements ProductService{
 
         //responseEntity.getStatusCode()
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
+
+        if(fakeStoreProductDto == null)
+        {
+                throw  new NotFoundException("product with id : "+ id + " does not exist.");
+        }
 
         return convertFakeStoreProductIntoGenericProduct(fakeStoreProductDto);
     }
