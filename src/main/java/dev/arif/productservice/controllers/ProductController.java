@@ -2,10 +2,12 @@ package dev.arif.productservice.controllers;
 
 import dev.arif.productservice.dtos.GenericProductDto;
 import dev.arif.productservice.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController()
@@ -34,9 +36,9 @@ public class ProductController {
         this.productService = productService;
     }
     @GetMapping
-    public  void getAllProduct()
+    public List<GenericProductDto> getAllProduct()
     {
-
+         return productService.getAllProducts();
     }
 
     //localhost:8080/products/123
@@ -47,10 +49,13 @@ public class ProductController {
     }
     //Path variable is used for getting resouse by Id
     @DeleteMapping("{id}")
-    public String deleteProductById(@PathVariable("id") Long id)
-    {
-        return "Here is product id: " +id;
+    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(
+                productService.deleteProductById(id),
+                HttpStatus.OK  // here we are return response code base on our requirement we can change it.
+        );
     }
+
 
     @PostMapping
     public GenericProductDto  createProduct(@RequestBody GenericProductDto productDto)
