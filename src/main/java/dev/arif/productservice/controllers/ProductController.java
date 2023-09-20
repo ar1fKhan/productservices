@@ -69,8 +69,8 @@ public class ProductController {
 
 
     @PutMapping("{id}")
-    public String updateProductById()
+    public GenericProductDto updateProductById(@PathVariable Long id, @RequestBody GenericProductDto productDto )
     {
-        return "this is used for adding production in database with id : "+UUID.randomUUID();
+        return productService.updateProductById(id,productDto);
     }
 }

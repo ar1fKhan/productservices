@@ -13,7 +13,6 @@ import java.util.List;
 
 
 
-@Primary
 @Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
 
@@ -67,5 +66,10 @@ public class FakeStoreProductService implements ProductService{
     public GenericProductDto deleteProductById(Long id)
     {
        return convertFakeStoreProductIntoGenericProduct(fakeStoreProductServiceClient.deleteProductById(id));
+    }
+
+    @Override
+    public GenericProductDto updateProductById(Long id, GenericProductDto genericProductDto) {
+        return convertFakeStoreProductIntoGenericProduct(fakeStoreProductServiceClient.updateProductById(id,genericProductDto));
     }
 }
