@@ -1,6 +1,6 @@
 package dev.arif.productservice.service;
 
-import dev.arif.productservice.dtos.GenericSelfProdductDto;
+import dev.arif.productservice.dtos.GenericSelfProductDto;
 import dev.arif.productservice.exception.NotFoundException;
 
 import java.util.List;
@@ -9,13 +9,13 @@ import java.util.UUID;
 public interface SelfProductServiceInterface {
 
 
-        GenericSelfProdductDto getProductById(UUID id)throws NotFoundException;
+        GenericSelfProductDto getProductById(UUID id)throws NotFoundException;
 
-        GenericSelfProdductDto createProduct(GenericSelfProdductDto genericProductDto);
+        GenericSelfProductDto createProduct(GenericSelfProductDto genericProductDto);
 
-        GenericSelfProdductDto deleteProductById(UUID id);
+        GenericSelfProductDto deleteProductById(UUID id);
 
-        List<GenericSelfProdductDto> getAllProducts();
+        List<GenericSelfProductDto> getAllProducts();
 
-        GenericSelfProdductDto updateProductById(UUID Id, GenericSelfProdductDto genericProductDto);
+        GenericSelfProductDto updateProductById(UUID Id, GenericSelfProductDto genericProductDto);
 }

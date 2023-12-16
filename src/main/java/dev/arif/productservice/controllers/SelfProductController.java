@@ -1,7 +1,6 @@
 package dev.arif.productservice.controllers;
 
-import dev.arif.productservice.dtos.GenericProductDto;
-import dev.arif.productservice.dtos.GenericSelfProdductDto;
+import dev.arif.productservice.dtos.GenericSelfProductDto;
 import dev.arif.productservice.exception.NotFoundException;
 import dev.arif.productservice.service.SelfProductServiceInterface;
 import org.springframework.http.HttpStatus;
@@ -22,20 +21,20 @@ public class SelfProductController {
     }
 
     @GetMapping
-    public List<GenericSelfProdductDto> getAllProduct()
+    public List<GenericSelfProductDto> getAllProduct()
     {
         return selfProductServiceInterface.getAllProducts();
     }
 
     //localhost:8080/products/123
     @GetMapping("{id}")
-    public GenericSelfProdductDto getProductById(@PathVariable("id") UUID id) throws NotFoundException
+    public GenericSelfProductDto getProductById(@PathVariable("id") UUID id) throws NotFoundException
     {
         return selfProductServiceInterface.getProductById(id) ;
     }
     //Path variable is used for getting resouse by Id
     @DeleteMapping("{id}")
-    public ResponseEntity<GenericSelfProdductDto> deleteProductById(@PathVariable("id") UUID id) {
+    public ResponseEntity<GenericSelfProductDto> deleteProductById(@PathVariable("id") UUID id) {
         return new ResponseEntity<>(
                 selfProductServiceInterface.deleteProductById(id),
                 HttpStatus.OK  // here we are return response code base on our requirement we can change it.
@@ -44,7 +43,7 @@ public class SelfProductController {
 
 
     @PostMapping
-    public GenericSelfProdductDto  createProduct(@RequestBody GenericSelfProdductDto productDto)
+    public GenericSelfProductDto createProduct(@RequestBody GenericSelfProductDto productDto)
     {
 
         return selfProductServiceInterface.createProduct(productDto);

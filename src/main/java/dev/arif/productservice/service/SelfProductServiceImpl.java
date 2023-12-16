@@ -1,11 +1,13 @@
 package dev.arif.productservice.service;
 
-import dev.arif.productservice.dtos.GenericSelfProdductDto;
+import dev.arif.productservice.dtos.GenericSelfProductDto;
 import dev.arif.productservice.models.Category;
 import dev.arif.productservice.models.Price;
 import dev.arif.productservice.models.Product;
 import dev.arif.productservice.repository.ProductRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,9 +19,9 @@ import java.util.UUID;
 @Service("SelfProductServiceImpl")
 public class SelfProductServiceImpl implements SelfProductServiceInterface{
 
-    private GenericSelfProdductDto convertSimpleProductIntoGenericProduct(Optional<Product> optproduct) {
+    private GenericSelfProductDto convertSimpleProductIntoGenericProduct(Optional<Product> optproduct) {
 
-        GenericSelfProdductDto productDto = new GenericSelfProdductDto();
+        GenericSelfProductDto productDto = new GenericSelfProductDto();
         if (optproduct.isPresent()) {
             Product product = optproduct.get();
             productDto.setId(product.getId());
@@ -46,12 +48,12 @@ public class SelfProductServiceImpl implements SelfProductServiceInterface{
     }
 
     @Override
-    public GenericSelfProdductDto getProductById(UUID id) {
+    public GenericSelfProductDto getProductById(UUID id) {
         return convertSimpleProductIntoGenericProduct(productRepository.findById(id));
     }
 
     @Override
-    public GenericSelfProdductDto createProduct(GenericSelfProdductDto genericProductDto) {
+    public GenericSelfProductDto createProduct(GenericSelfProductDto genericProductDto) {
 
         Price price = new Price();
         Category category = new Category();
@@ -77,17 +79,23 @@ public class SelfProductServiceImpl implements SelfProductServiceInterface{
     }
 
     @Override
-    public GenericSelfProdductDto deleteProductById(UUID id) {
-        GenericSelfProdductDto product = convertSimpleProductIntoGenericProduct(productRepository.findById(id));
+    public GenericSelfProductDto deleteProductById(UUID id) {
+        GenericSelfProductDto product = convertSimpleProductIntoGenericProduct(productRepository.findById(id));
        productRepository.deleteById(id);
        return product;
 
     }
 
     @Override
-    public List<GenericSelfProdductDto> getAllProducts() {
+    public List<GenericSelfProductDto> getAllProducts() {
         List<Product>  products = productRepository.findAll();
-        List<GenericSelfProdductDto> genericSimpleDtos = new ArrayList<>();
+
+        /*List<Product> products = productRepository.getAll(
+                Pageable.ofSize(10)  // get fist 10 products
+        );
+        PageRequest pageRequest = PageRequest.of(2,10 ); */// get 10 products from page 2
+
+        List<GenericSelfProductDto> genericSimpleDtos = new ArrayList<>();
         for(Product product : products)
         {
             genericSimpleDtos.add(convertSimpleProductIntoGenericProduct(Optional.ofNullable(product)));
@@ -96,7 +104,7 @@ public class SelfProductServiceImpl implements SelfProductServiceInterface{
     }
 
     @Override
-    public GenericSelfProdductDto updateProductById(UUID Id, GenericSelfProdductDto genericProductDto) {
+    public GenericSelfProductDto updateProductById(UUID Id, GenericSelfProductDto genericProductDto) {
         return null;
     }
 }
